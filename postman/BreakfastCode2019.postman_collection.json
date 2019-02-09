@@ -1,0 +1,585 @@
+{
+	"info": {
+		"_postman_id": "38387215-fff7-9598-6825-ace86648a07e",
+		"name": "BreakfastCoding-2019",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LIST - ALL Greetings",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"7b918718\""
+					},
+					{
+						"key": "X-Log-Token",
+						"value": "hey",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greetings;v=2",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greetings;v=1",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings"
+					]
+				},
+				"description": "Get the current set of greetings"
+			},
+			"response": []
+		},
+		{
+			"name": "GET HALLO http://.../greetings/hallo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json",
+						"description": "application/hal+json;concept=greeting;v=2"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-Modified-Since",
+						"value": "Fri, 14 Sep 2017 18:26:40 GMT",
+						"description": "Fri, 15 Sep 2017 18:26:40 GMT"
+					},
+					{
+						"key": "X-Log-Token",
+						"value": "\"something-we-know"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"37e5466a\"",
+						"description": "\"37e5466a\""
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greeting;v=1",
+						"description": "unsupported version",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greeting;v=4",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/hallo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"hallo"
+					]
+				},
+				"description": "Shows the meaning of eTag and modified since as weel as demontrates the logtoken effect as an offer to the consumers"
+			},
+			"response": []
+		},
+		{
+			"name": "GET HALLOJ http://.../greetings/halloj",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json",
+						"description": "application/hal+json;concept=greeting;v=2"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-Modified-Since",
+						"value": "Fri, 14 Sep 2017 18:26:40 GMT",
+						"description": "Fri, 15 Sep 2017 18:26:40 GMT"
+					},
+					{
+						"key": "X-Log-Token",
+						"value": "\"something-we-know"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"7279b309\"",
+						"description": "\"7279b309\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/halloj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"halloj"
+					]
+				},
+				"description": "Shows the meaning of eTag and modified since as weel as demontrates the logtoken effect as an offer to the consumers"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT HALLOJ http://.../greetings/halloj",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"7279b309\"",
+						"description": "\n"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"1541b975\"",
+						"disabled": true
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"db78b4b3\"",
+						"description": "Title Changed",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"greeting\":\"Halløj!\",\"language\":\"Dansk\",\"country\":\"Danmark\",\"native\":{\"language\":\"Dansk\",\"country\":\"Danmark\"},\"_links\":{\"self\":{\"href\":\"/greetings/halloj\",\"type\": \"application/hal+json;concept=greeting\",\"templated\":\"true\",\"hreflang\": \"en\",\"seen\": \"2018-03-02T10:21:58.768Z\",\"title\":\"Dansk Hilsen Halløj\"}}}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/halloj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"halloj"
+					]
+				},
+				"description": "PUT a Greetring"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE HALLOJ http://.../greetings/halloj",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"7279b309\"",
+						"description": "\"7279b309\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/halloj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"halloj"
+					]
+				},
+				"description": "Delet the created halloj resource"
+			},
+			"response": []
+		},
+		{
+			"name": "OPTIONS HALLOJ http://.../greetings/halloj",
+			"request": {
+				"method": "OPTIONS",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "X-Log-Token",
+						"value": "noget-vi-kan-kende"
+					},
+					{
+						"key": "Accept-Patch",
+						"value": "application/patch+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/greetings/halloj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"halloj"
+					]
+				},
+				"description": "Get halloj with no etags or modified since setup"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH HALLOJ http://.../greetings/halloj",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/patch+json",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "Accept-Patch",
+						"value": "\"application/patch+json\""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/patch+json"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"7279b309\"",
+						"description": "\"7279b309\""
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"73e90132\"",
+						"description": "after PATCH title change",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"op\":\"replace\",\n \"path\":\"language\",\n \"value\":\"Jibberish\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/halloj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"halloj"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH HALLOJ LINK http://..../greetings/halloj",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/patch+json",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "Accept-Patch",
+						"value": "\"application/patch+json\""
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"73e90132\"",
+						"description": "after PATCH title change"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"7279b309\"",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/patch+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"op\":\"replace\",\n \"path\":\"_links/self/title\",\n \"value\":\"Jibberish Title\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/halloj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"halloj"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET OHOJ http://.../greetings/ohoj",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-Modified-Since",
+						"value": "Fri, 14 Sep 2017 18:26:40 GMT",
+						"description": "Fri, 15 Sep 2017 18:26:40 GMT"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"11449729\"",
+						"description": "\"11449729\""
+					},
+					{
+						"key": "X-Log-Token",
+						"value": "\"something-we-know\""
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greeting;v=4",
+						"description": "supported",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greeting;v=3",
+						"description": "supported",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greeting;v=2",
+						"description": "supported",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;concept=greeting;v=1",
+						"description": "no longer supported",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/ohoj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"ohoj"
+					]
+				},
+				"description": "Shows the meaning of eTag and modified since as weel as demontrates the logtoken effect as an offer to the consumers"
+			},
+			"response": []
+		},
+		{
+			"name": "POST OHOJ http://.../greetings/ohoj",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"greeting\":\"Ohøj!\",\"language\":\"Dansk\",\"country\":\"Danmark\",\"native\":{\"language\":\"Dansk\",\"country\":\"Danmark\"},\"_links\":{\"self\":{\"href\":\"/greetings/ohoj\",\"type\": \"application/hal+json;concept=greeting\",\"templated\":\"true\",\"hreflang\": \"en\",\"seen\": \"2018-03-02T10:21:58.768Z\",\"title\":\"Dansk Hilsen Ohøj\"}}}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings"
+					]
+				},
+				"description": "POST a Greeting"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE OHOJ http://.../greetings/ohoj",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"11449729\"",
+						"description": "\"11449729\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/greetings/ohoj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"ohoj"
+					]
+				},
+				"description": "Delete the created halloj resource"
+			},
+			"response": []
+		},
+		{
+			"name": "GET WADL http://.../application.wadl?detail=true",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/application.wadl?detail=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"application.wadl"
+					],
+					"query": [
+						{
+							"key": "detail",
+							"value": "true"
+						}
+					]
+				},
+				"description": "GET Wadl"
+			},
+			"response": []
+		}
+	]
+}

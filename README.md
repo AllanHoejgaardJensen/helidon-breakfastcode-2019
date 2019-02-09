@@ -2,7 +2,7 @@
 # Breakfast Coding 2019
 
 This example implements a REST service using Helidon MicroProfile
-ans shows HTTP Verbs (GET, POST, PUT, DELETE, and PATCH )used
+and shows HTTP Verbs (GET, POST, PUT, DELETE, and PATCH )used
 together with eTags, caching, content-type based versioning and
 idempotency.
 

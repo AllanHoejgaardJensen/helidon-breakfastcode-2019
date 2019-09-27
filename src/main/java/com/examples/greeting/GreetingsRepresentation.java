@@ -38,7 +38,7 @@ public class GreetingsRepresentation {
         this.self = new HALLink.Builder("/greetings")
                 .name("greetingslist")
                 .title("A list of greetings")
-                .type("application/hal+json;concept=greetings")
+                .type("application/hal+json;p=greetings")
                 .build();
         embeddedGreetings = new ArrayList<>(greetings.size());
         embeddedGreetings.addAll(greetings);

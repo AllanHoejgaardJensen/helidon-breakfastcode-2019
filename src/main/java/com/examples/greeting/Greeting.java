@@ -18,6 +18,7 @@ package com.examples.greeting;
 
 import com.examples.RepresentationContainer;
 import com.examples.patch.JSONPatchContainer;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.openapitools.jackson.dataformat.hal.HALLink;
@@ -71,14 +72,14 @@ public class Greeting {
         greetingProducers.put("application/hal+json;p=greeting;v=2", this::getGreetingG1V2);
         greetingProducers.put("application/hal+json;p=greeting;v=3", this::getGreetingG1V3);
         greetingProducers.put("application/hal+json;p=greeting;v=4", this::getGreetingG1V4);
-        greetingProducers.put("application/hal+json;p=metadata", this::getGreetingMetadata);
+        greetingProducers.put("application/json;p=metadata", this::getGreetingMetadata);
 
         greetingListProducers.put("application/json", this::getGreetingListG1V2);
         greetingListProducers.put("application/hal+json", this::getGreetingListG1V2);
         greetingListProducers.put("application/hal+json;p=greetings", this::getGreetingListG1V2);
         greetingListProducers.put("application/hal+json;p=greetings;v=2", this::getGreetingListG1V2);
         greetingListProducers.put("application/hal+json;p=greetings;v=1", this::getGreetingListG1V1);
-        greetingListProducers.put("application/hal+json;p=metadata", this::getGreetingListMetadata);
+        greetingListProducers.put("application/json;p=metadata", this::getGreetingListMetadata);
     }
     /**
      * Create a new representation and disallow replace an existing representation.
@@ -151,6 +152,9 @@ public class Greeting {
                         .header("X-Log-Token", validateOrCreateToken(logToken))
                         .build();
             }
+        } catch (JsonParseException jpe) {
+            LOGGER.log(Level.WARNING, "Sorry, I could not parse the input. which was:\n" + greeting.toString(), jpe);
+            status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
         } catch (IOException ex) {
             LOGGER.log(Level.WARNING, "Sorry, I could not parse the input. which was:\n" + greeting.toString(), ex);
         }
@@ -180,7 +184,7 @@ public class Greeting {
             @Pattern(regexp = "^((\\s*[a-z]{2},{0,1}(-{0,1}[a-z]{2}){0,1})+(;q=0\\.[1-9]){0,1},{0,1})+") String acceptLanguage,
             @HeaderParam("X-Log-Token") @Pattern(regexp = "^[a-zA-Z0-9\\-]{36}$") String logToken,
             @HeaderParam("If-None-Match") String eTag) {
-        return greetingListProducers.getOrDefault(accept, this::handle415Unsupported).getResponse(request, accept, acceptLanguage, logToken, eTag);
+        return greetingListProducers.getOrDefault(accept, this::handle406UnsupportedGreetings).getResponse(request, accept, acceptLanguage, logToken, eTag);
     }
 
     /**
@@ -226,14 +230,14 @@ public class Greeting {
             String greeting) {
         LOGGER.log(Level.INFO, "PUT - Greeting");
         ObjectMapper mapper = new HALMapper();
+        Response.Status status = Response.Status.BAD_REQUEST;
         try {
             GreetingRepresentation mappedGreeting = mapper.readValue(greeting, GreetingRepresentation.class);
             String key = getGreetingRef(mappedGreeting) + "_" + preferredLanguage(acceptLanguage);
             GreetingRepresentation stored = representations.get(key);
             final String msg = "Greeting (" + key + ") - in total (" + representations.size() + "):\n" + mappedGreeting.toHAL();
-            final String inconsistency = "Href and ressource mismatch - target:" + resource + " object:" + msg;
+            final String inconsistency = "Href and resource mismatch - target:" + resource + " object:" + msg;
             GreetingRepresentation receivedGreeting = new GreetingRepresentation(mappedGreeting);
-            Response.Status status;
             EntityTag et = null;
             if (stored == null) {
                 status = createNewGreeting(receivedGreeting, resource, msg, key, inconsistency);
@@ -259,10 +263,13 @@ public class Greeting {
                     .header("Location", receivedGreeting.getSelf().getHref())
                     .header("X-Log-Token", validateOrCreateToken(logToken))
                     .build();
+        } catch (JsonParseException jpe) {
+            LOGGER.log(Level.WARNING, "Sorry, I could not parse the input. which was:\n" + greeting.toString(), jpe);
+            status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
         } catch (IOException ex) {
             LOGGER.log(Level.WARNING, "Sorry, I could not parse the input. which was:\n" + greeting, ex);
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(status).build();
     }
 
     /**
@@ -365,6 +372,7 @@ public class Greeting {
         LOGGER.log(Level.INFO, "PATCH - Greeting");
 
         String key = greeting + "_" + preferredLanguage(acceptLanguage);
+        Response.Status status = Response.Status.BAD_REQUEST;
         GreetingRepresentation stored = representations.get(key);
         if (stored == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -411,9 +419,10 @@ public class Greeting {
                 }
             } catch (JsonProcessingException ex) {
                 LOGGER.log(Level.SEVERE, "Could not map List to json", ex);
+                status = Response.Status.UNSUPPORTED_MEDIA_TYPE;
             }
         }
-        return Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(status).build();
     }
 
 
@@ -443,7 +452,7 @@ public class Greeting {
             @HeaderParam("X-Log-Token") @Pattern(regexp = "^[a-zA-Z0-9\\-]{36}$") String logToken,
             @HeaderParam("If-None-Match") String eTag,
             @PathParam("representation") @Pattern(regexp = "[a-z]*") String greeting) {
-        return greetingProducers.getOrDefault(accept, this::handle415Unsupported).getResponse(request, accept, acceptLanguage, greeting, logToken);
+        return greetingProducers.getOrDefault(accept, this::handle406UnsupportedGreetings).getResponse(request, accept, acceptLanguage, greeting, logToken);
     }
 
     private Response getGreetingListG1V2(Request request, String accept, String acceptLanguage, String logToken, String eTag) {
@@ -498,6 +507,11 @@ public class Greeting {
         String entity = "{"
                 + "  \"metadata\":  {"
                 + "      \"versions\":\"....\","
+                + "      \"deprecations\":\"....\","
+                + "      \"relations\":\"....\","
+                + "      \"specifications\":\"....\","
+                + "      \"reports\":\"....\","
+                + "      \"issues\":\"....\","
                 + "      \"history\":\"....\","
                 + "      \"help\":\"....\""
                 + "      }"
@@ -523,7 +537,7 @@ public class Greeting {
         final String key = greeting + "_" + language;
         GreetingRepresentation entity = representations.get(key);
         if (entity == null) {
-            Response response = getNoGreetingFound(logToken);
+            Response response = getNoGreetingFound(logToken, key);
             return response;
         }
         ObjectMapper mapper = new HALMapper();
@@ -558,7 +572,7 @@ public class Greeting {
         String language = preferredLanguage(acceptLanguage);
         GreetingRepresentation greetingEntity = representations.get(greeting + "_" + language);
         if (greetingEntity == null) {
-            return getNoGreetingFound(logToken);
+            return getNoGreetingFound(logToken, greeting + "_" + language);
         }
         return getResponse(request, logToken, greetingEntity.toHAL(), 3);
     }
@@ -591,6 +605,11 @@ public class Greeting {
         String entity = "{"
                 + "  \"metadata\":  {"
                 + "      \"versions\":\"....\","
+                + "      \"deprecations\":\"....\","
+                + "      \"relations\":\"....\","
+                + "      \"specifications\":\"....\","
+                + "      \"reports\":\"....\","
+                + "      \"issues\":\"....\","
                 + "      \"history\":\"....\","
                 + "      \"help\":\"....\""
                 + "      }"
@@ -626,8 +645,14 @@ public class Greeting {
         return status;
     }
 
-    private Response getNoGreetingFound(String logToken) {
-        LOGGER.log(Level.INFO, "No Greeting Found");
+    private Response getNoGreetingFound(String logToken, String key) {
+        LOGGER.log(Level.INFO, "No Greeting Found token: " + logToken +  " Greeeting: " + key);
+        if ("hallihallo_da".equals(key)) {
+            return getMovedResponse(logToken);
+        }
+        if ("howdydoydy_da".equals(key)){
+            return getProblemResponse(logToken);
+        }
         String entity;
         entity = "{"
                 + "\"message\":\"Sorry your representation does not exist yet!\","
@@ -653,6 +678,7 @@ public class Greeting {
         EntityTag eTag = getETag(entity);
         Response.ResponseBuilder builder = request.evaluatePreconditions(lastModified, eTag);
         if (builder != null) {
+            LOGGER.info("* building * 301 * on basis of builder");
             return builder.build();
         }
         CacheControl cacheControl = new CacheControl();
@@ -677,6 +703,44 @@ public class Greeting {
                 .build();
     }
 
+    private Response getMovedResponse(String logToken) {
+        LOGGER.info("Yeah - that was moved");
+        String entity;
+        entity = "{"
+                + "\"message\":\"Sorry your representation does not exist yet!\","
+                + "\"_links\":{"
+                + "\"greetings\":{"
+                + "\"href\":\"/greetings\","
+                + "\"type\":\"application/hal+json\","
+                + "\"title\":\"List of existing greetings\""
+                + "}"
+                + "}"
+                + "}";
+        return Response
+                .status(Response.Status.MOVED_PERMANENTLY)
+                .entity(entity)
+                .type("application/hal+json")
+                .header("Location", "/greetings/hallo")
+                .header("X-Log-Token", validateOrCreateToken(logToken))
+                .build();
+    }
+
+    private Response getProblemResponse(String logToken) {
+        LOGGER.info("I see problems");
+        String entity;
+        entity = "{"
+                + "\"type\":\"non-existent greeting!\","
+                + "\"title\":\"Sorry your representation does not exist!\","
+                + "\"detail\":\"You can create one using POST at greetings or PUT at greetings/{greeting}\""
+                + "}";
+        return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity(entity)
+                .type("application/problem+json")
+                .header("Location", "/greetings")
+                .header("X-Log-Token", validateOrCreateToken(logToken))
+                .build();
+    }
 
     private String preferredLanguage(String preferred) {
         if (preferred == null || preferred.isEmpty()) {
@@ -691,7 +755,7 @@ public class Greeting {
      * and Clock
      */
     private Date getLastModified() {
-        return Date.from(Instant.ofEpochMilli(1505500000000L));
+        return Date.from(Instant.ofEpochMilli(1565074000000L)); // Tue, 06 Aug 2019 06:46:40 GMT
     }
 
     private EntityTag getETag(String entity) {
@@ -710,13 +774,32 @@ public class Greeting {
         Response getResponse(Request request, String accept, String acceptLanguage, String greeting, String logToken);
     }
 
-    Response handle415Unsupported(Request request, String... params) {
+    private Response handle406UnsupportedGreetings(Request request, String... params) {
+        String msg = Arrays.toString(params);
+        LOGGER.log(Level.INFO, "Attempted to get a list by an unsupported content type {0}", msg);
+        String entity;
+        entity = "{"
+                + "  \"message\":\"Sorry your representation of greetings does not exist!\","
+                + "  \"accepted\":{"
+                + "    \"application/json\", \"application/hal+json\", \"application/json;p=greeting\","
+                + "    \"application/json;p=greetings;v=2\", \"application/json;p=greetings;v=1\", "
+                + "    \"application/hal+json;p=metadata\""
+                + "  }"
+                + "}";
+        return Response
+                .status(Response.Status.NOT_ACCEPTABLE)
+                .entity(entity)
+                .build();
+    }
+
+    private Response handle415Unsupported(Request request, String... params) {
         String msg = Arrays.toString(params);
         LOGGER.log(Level.INFO, "Attempted to get an nonsupported content type {0}", msg);
         return Response
                 .status(Response.Status.UNSUPPORTED_MEDIA_TYPE)
                 .build();
     }
+
     private String getGreetingRef(GreetingRepresentation newGreeting) {
         String ref = newGreeting.getSelf().getHref();
         String resources = "greetings/";

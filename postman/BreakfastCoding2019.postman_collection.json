@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "38387215-fff7-9598-6825-ace86648a07e",
+		"_postman_id": "6eb3f0e1-180d-4deb-83b2-18dfc19579e1",
 		"name": "BreakfastCoding-2019",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,19 +29,27 @@
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greetings;v=2",
+						"value": "application/hal+json;p=greetings;v=2",
 						"disabled": true
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greetings;v=1",
+						"value": "application/hal+json;p=greetings;v=1",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;v=1",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "",
+						"type": "text",
 						"disabled": true
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/greetings",
 					"protocol": "http",
@@ -65,7 +73,7 @@
 					{
 						"key": "Accept",
 						"value": "application/hal+json",
-						"description": "application/hal+json;concept=greeting;v=2"
+						"description": "application/hal+json;p=greeting;v=2"
 					},
 					{
 						"key": "Accept-Language",
@@ -73,34 +81,52 @@
 					},
 					{
 						"key": "If-Modified-Since",
-						"value": "Fri, 14 Sep 2017 18:26:40 GMT",
-						"description": "Fri, 15 Sep 2017 18:26:40 GMT"
+						"value": "Tue, 06 Aug 2019 06:00:00 GMT",
+						"description": "Tue, 06 Aug 2019 06:46:40 GMT"
 					},
 					{
 						"key": "X-Log-Token",
 						"value": "\"something-we-know"
 					},
 					{
-						"key": "If-None-Match",
-						"value": "\"37e5466a\"",
-						"description": "\"37e5466a\""
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=4",
+						"description": "current version",
+						"disabled": true
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greeting;v=1",
+						"value": "application/hal+json;p=greeting;v=3",
+						"description": "last version",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=2",
+						"description": "the version before last version",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=1",
 						"description": "unsupported version",
 						"disabled": true
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greeting;v=4",
+						"value": "application/json;p=metadata",
+						"type": "text",
 						"disabled": true
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"9205a4c0\"",
+						"description": "\"9205a4c0\"",
+						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/greetings/hallo",
 					"protocol": "http",
@@ -125,7 +151,7 @@
 					{
 						"key": "Accept",
 						"value": "application/hal+json",
-						"description": "application/hal+json;concept=greeting;v=2"
+						"description": "application/hal+json;p=greeting;v=2"
 					},
 					{
 						"key": "Accept-Language",
@@ -133,8 +159,8 @@
 					},
 					{
 						"key": "If-Modified-Since",
-						"value": "Fri, 14 Sep 2017 18:26:40 GMT",
-						"description": "Fri, 15 Sep 2017 18:26:40 GMT"
+						"value": "Tue, 06 Aug 2019 06:00:00 GMT",
+						"description": "Tue, 06 Aug 2019 06:46:40 GMT"
 					},
 					{
 						"key": "X-Log-Token",
@@ -142,14 +168,10 @@
 					},
 					{
 						"key": "If-None-Match",
-						"value": "\"7279b309\"",
-						"description": "\"7279b309\""
+						"value": "\"17a12e81-\"",
+						"description": "\"17a12e81\""
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/greetings/halloj",
 					"protocol": "http",
@@ -185,8 +207,8 @@
 					},
 					{
 						"key": "If-None-Match",
-						"value": "\"7279b309\"",
-						"description": "\n"
+						"value": "\"17a12e81\"",
+						"description": "\"17a12e81\"\n"
 					},
 					{
 						"key": "If-None-Match",
@@ -202,7 +224,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"greeting\":\"Halløj!\",\"language\":\"Dansk\",\"country\":\"Danmark\",\"native\":{\"language\":\"Dansk\",\"country\":\"Danmark\"},\"_links\":{\"self\":{\"href\":\"/greetings/halloj\",\"type\": \"application/hal+json;concept=greeting\",\"templated\":\"true\",\"hreflang\": \"en\",\"seen\": \"2018-03-02T10:21:58.768Z\",\"title\":\"Dansk Hilsen Halløj\"}}}"
+					"raw": "{\"greeting\":\"Halløj!\",\"language\":\"Dansk\",\"country\":\"Danmark\",\"native\":{\"language\":\"Dansk\",\"country\":\"Danmark\"},\"_links\":{\"self\":{\"href\":\"/greetings/halloj\",\"type\": \"application/hal+json;p=greeting\",\"templated\":\"true\",\"hreflang\": \"en\",\"seen\": \"2018-03-02T10:21:58.768Z\",\"title\":\"Dansk Hilsen Halløj\"}}}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/greetings/halloj",
@@ -235,8 +257,15 @@
 					},
 					{
 						"key": "If-None-Match",
-						"value": "\"7279b309\"",
-						"description": "\"7279b309\""
+						"value": "\"17a12e81\"",
+						"description": "\"7279b309\"",
+						"disabled": true
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"a0581d51\"",
+						"description": "if changed by patch twice",
+						"type": "text"
 					}
 				],
 				"body": {
@@ -281,7 +310,6 @@
 						"value": "application/patch+json"
 					}
 				],
-				"body": {},
 				"url": {
 					"raw": "http://localhost:8080/greetings/halloj",
 					"protocol": "http",
@@ -322,8 +350,8 @@
 					},
 					{
 						"key": "If-None-Match",
-						"value": "\"7279b309\"",
-						"description": "\"7279b309\""
+						"value": "\"17a12e81\"",
+						"description": "\"17a12e81\""
 					},
 					{
 						"key": "If-None-Match",
@@ -372,16 +400,17 @@
 					{
 						"key": "If-None-Match",
 						"value": "\"73e90132\"",
-						"description": "after PATCH title change"
-					},
-					{
-						"key": "If-None-Match",
-						"value": "\"7279b309\"",
+						"description": "after PATCH title change",
 						"disabled": true
 					},
 					{
+						"key": "If-None-Match",
+						"value": "\"f97600aa\""
+					},
+					{
 						"key": "Content-Type",
-						"value": "application/patch+json"
+						"value": "application/patch+json",
+						"description": "not a real standard here just a tiny subset of patch-json-patch+json defined in application/json-patch+json RFC6902 \n\nsee: http://jsonpatch.com/"
 					}
 				],
 				"body": {
@@ -418,13 +447,13 @@
 					},
 					{
 						"key": "If-Modified-Since",
-						"value": "Fri, 14 Sep 2017 18:26:40 GMT",
-						"description": "Fri, 15 Sep 2017 18:26:40 GMT"
+						"value": "Tue, 06 Aug 2019 08:00:00 GMT",
+						"description": "Tue, 06 Aug 2019 06:46:40 GMT"
 					},
 					{
 						"key": "If-None-Match",
-						"value": "\"11449729\"",
-						"description": "\"11449729\""
+						"value": "\"94e846a1-\"",
+						"description": "\"94e846a1\""
 					},
 					{
 						"key": "X-Log-Token",
@@ -432,33 +461,29 @@
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greeting;v=4",
+						"value": "application/hal+json;p=greeting;v=4",
 						"description": "supported",
 						"disabled": true
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greeting;v=3",
+						"value": "application/hal+json;p=greeting;v=3",
 						"description": "supported",
 						"disabled": true
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greeting;v=2",
+						"value": "application/hal+json;p=greeting;v=2",
 						"description": "supported",
 						"disabled": true
 					},
 					{
 						"key": "Accept",
-						"value": "application/hal+json;concept=greeting;v=1",
+						"value": "application/hal+json;p=greeting;v=1",
 						"description": "no longer supported",
 						"disabled": true
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8080/greetings/ohoj",
 					"protocol": "http",
@@ -490,12 +515,14 @@
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"greeting\":\"Ohøj!\",\"language\":\"Dansk\",\"country\":\"Danmark\",\"native\":{\"language\":\"Dansk\",\"country\":\"Danmark\"},\"_links\":{\"self\":{\"href\":\"/greetings/ohoj\",\"type\": \"application/hal+json;concept=greeting\",\"templated\":\"true\",\"hreflang\": \"en\",\"seen\": \"2018-03-02T10:21:58.768Z\",\"title\":\"Dansk Hilsen Ohøj\"}}}"
+					"raw": "{\n    \"greeting\": \"Ohøj!\",\n    \"language\": \"Dansk\",\n    \"country\": \"Danmark\",\n    \"native\": {\n        \"language\": \"Dansk\",\n        \"country\": \"Danmark\"\n    },\n    \"_links\": {\n        \"self\": {\n            \"href\": \"/greetings/ohoj\",\n            \"type\": \"application/hal+json;p=greeting\",\n            \"templated\": \"true\",\n            \"hreflang\": \"en\",\n            \"seen\": \"2018-03-02T10:21:58.768Z\",\n            \"title\": \"Dansk Hilsen Ohøj\"\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/greetings",
@@ -527,8 +554,8 @@
 					},
 					{
 						"key": "If-None-Match",
-						"value": "\"11449729\"",
-						"description": "\"11449729\""
+						"value": "\"94e846a1\"",
+						"description": "\"94e846a1\""
 					}
 				],
 				"body": {
@@ -552,32 +579,123 @@
 			"response": []
 		},
 		{
-			"name": "GET WADL http://.../application.wadl?detail=true",
+			"name": "Meet the World",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "http://localhost:8080/application.wadl?detail=true",
+					"raw": "http://localhost:8080/meet",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"application.wadl"
-					],
-					"query": [
-						{
-							"key": "detail",
-							"value": "true"
-						}
+						"meet"
 					]
-				},
-				"description": "GET Wadl"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change The World",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/meet-representation/Hejza",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meet-representation",
+						"Hejza"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A Person Meets the World",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/meet/Allan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meet",
+						"Allan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A Resource was Moved",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/greetings/hallihallo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"hallihallo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "I See Problems",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/greetings/howdydoydy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"howdydoydy"
+					]
+				}
 			},
 			"response": []
 		}

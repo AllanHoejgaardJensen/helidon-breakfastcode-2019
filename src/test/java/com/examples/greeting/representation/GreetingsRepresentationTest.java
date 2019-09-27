@@ -25,7 +25,7 @@ public class GreetingsRepresentationTest {
                 .name("Danish Greeting Hallo")
                 .templated(false)
                 .hreflang("da")    
-                .type("application/hal+json;concept=representation")
+                .type("application/hal+json;p=representation")
                 .build();
         initialGreetings.put("hallo_da", 
                 new GreetingRepresentation("Hallo!", "Dansk", "Danmark", 
@@ -37,7 +37,7 @@ public class GreetingsRepresentationTest {
                 .name("Danish Greeting Hallo")
                 .templated(false)
                 .hreflang("en")    
-                .type("application/hal+json;concept=representation")
+                .type("application/hal+json;p=representation")
                 .build();
         initialGreetings.put("hallo_en", 
                 new GreetingRepresentation("Hallo!", "Dansk", "Danmark", 
@@ -49,7 +49,7 @@ public class GreetingsRepresentationTest {
                 .name("English Greeting Hello")
                 .templated(false)
                 .hreflang("da")    
-                .type("application/hal+json;concept=representation")
+                .type("application/hal+json;p=representation")
                 .build();
         initialGreetings.put("hello_da", 
                 new GreetingRepresentation("Hello!", "English", "England", 
@@ -61,7 +61,7 @@ public class GreetingsRepresentationTest {
                 .name("English Greeting Hello")
                 .templated(false)
                 .hreflang("en")    
-                .type("application/hal+json;concept=representation")
+                .type("application/hal+json;p=representation")
                 .build();
         initialGreetings.put("hello_en", 
                 new GreetingRepresentation("Hello!", "English", "England", 

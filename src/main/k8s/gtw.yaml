@@ -1,0 +1,37 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ${project.artifactId}-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ${project.artifactId}
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - ${project.artifactId}-gateway
+  http:
+    - match:
+        - uri:
+            prefix: "/meet"
+        - uri:
+            prefix: "/meet-representation"
+        - uri:
+            prefix: "/greetings"
+      route:
+        - destination:
+            host: ${project.artifactId}
+            port:
+              number: 8080

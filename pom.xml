@@ -42,6 +42,9 @@
         <com.fasterxml.jackson.version>2.9.8</com.fasterxml.jackson.version>
         <swagger.hal.version>1.0.4</swagger.hal.version>
         <open.api.2.version>1.5.21</open.api.2.version>
+        <dockername>yourdockername</dockername>
+        <deliveryVersion>replacewithversionfromci</deliveryVersion>
+        <secret>somesecret</secret>
     </properties>
 
     <build>
@@ -145,7 +148,7 @@
                                     <filtering>true</filtering>
                                     <directory>src/main/k8s</directory>
                                     <includes>
-                                        <include>app.yaml</include>
+                                        <include>*.yaml</include>
                                     </includes>
                                 </resource>
                             </resources>

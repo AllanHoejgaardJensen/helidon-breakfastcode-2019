@@ -144,6 +144,84 @@
 			"response": []
 		},
 		{
+			"name": "GET HALLO(en)  http://.../greetings/hallo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json",
+						"description": "application/hal+json;p=greeting;v=2"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "da"
+					},
+					{
+						"key": "If-Modified-Since",
+						"value": "Tue, 06 Aug 2019 06:00:00 GMT",
+						"description": "Tue, 06 Aug 2019 06:46:40 GMT"
+					},
+					{
+						"key": "X-Log-Token",
+						"value": "\"something-we-know"
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=4",
+						"description": "current version",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=3",
+						"description": "last version",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=2",
+						"description": "the version before last version",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/hal+json;p=greeting;v=1",
+						"description": "unsupported version",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json;p=metadata",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "If-None-Match",
+						"value": "\"9205a4c0\"",
+						"description": "\"9205a4c0\"",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/greetings/hallo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"greetings",
+						"hallo"
+					]
+				},
+				"description": "Shows the meaning of eTag and modified since as weel as demontrates the logtoken effect as an offer to the consumers"
+			},
+			"response": []
+		},
+		{
 			"name": "GET HALLOJ http://.../greetings/halloj",
 			"request": {
 				"method": "GET",
@@ -654,7 +732,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/greetings/hallihallo",
+					"raw": "http://localhost:8080/greetings/hallihalloeje",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -662,7 +740,7 @@
 					"port": "8080",
 					"path": [
 						"greetings",
-						"hallihallo"
+						"hallihalloeje"
 					]
 				}
 			},
@@ -695,6 +773,17 @@
 						"greetings",
 						"howdydoydy"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rubbish Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

@@ -647,11 +647,14 @@ public class Greeting {
 
     private Response getNoGreetingFound(String logToken, String key) {
         LOGGER.log(Level.INFO, "No Greeting Found token: " + logToken +  " Greeeting: " + key);
-        if ("hallihallo_da".equals(key)) {
+        if ("hallihalleje_da".equals(key)) {
             return getMovedResponse(logToken);
         }
         if ("howdydoydy_da".equals(key)){
             return getProblemResponse(logToken);
+        }
+        if ("rubbishcontent_da".equals(key)){
+            return handle415Unsupported(logToken);
         }
         String entity;
         entity = "{"
@@ -704,7 +707,7 @@ public class Greeting {
     }
 
     private Response getMovedResponse(String logToken) {
-        LOGGER.info("Yeah - that was moved");
+        LOGGER.info("Yeah - that was moved - redirecting to /greetings/hallo the default greeting");
         String entity;
         entity = "{"
                 + "\"message\":\"Sorry your representation does not exist yet!\","
@@ -792,9 +795,8 @@ public class Greeting {
                 .build();
     }
 
-    private Response handle415Unsupported(Request request, String... params) {
-        String msg = Arrays.toString(params);
-        LOGGER.log(Level.INFO, "Attempted to get an nonsupported content type {0}", msg);
+    private Response handle415Unsupported(String token) {
+        LOGGER.log(Level.INFO, "Attempted to get an nonsupported entity content type {0}", "application/rubbish+json");
         return Response
                 .status(Response.Status.UNSUPPORTED_MEDIA_TYPE)
                 .build();
